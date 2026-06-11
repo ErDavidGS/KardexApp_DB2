@@ -17,7 +17,18 @@ public class KardexController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get(DateTime fecha1, DateTime fecha2, string producto)
     {
-        var data = await _service.ObtenerKardex(fecha1, fecha2, producto);
-        return Ok(data);
+        try
+        {
+            var data = await _service.ObtenerKardex(fecha1, fecha2, producto);
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new
+            {
+                error = ex.Message,
+                detalle = ex.ToString()
+            });
+        }
     }
 }
