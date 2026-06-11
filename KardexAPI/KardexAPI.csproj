@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Net.IBM.Data.Db2" Version="10.0.0.200" />
+    <PackageReference Include="Net.IBM.Data.Db2-lnx" Version="10.0.0.200" />
   </ItemGroup>
 
   <ItemGroup>
