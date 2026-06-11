@@ -427,3 +427,15 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# React / Vite
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# .NET
+KardexAPI/bin/
+KardexAPI/obj/
+
+# Local settings
+*.Development.json
