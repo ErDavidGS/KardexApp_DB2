@@ -15,12 +15,22 @@ RUN dotnet publish KardexAPI/KardexAPI.csproj -c Release -o /app/publish --no-re
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
+# Dependencias necesarias para IBM Db2 native client
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libxml2 \
+    libstdc++6 \
+    libgcc-s1 \
+    && (apt-get install -y --no-install-recommends libaio1 || apt-get install -y --no-install-recommends libaio1t64) \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /app/publish .
 COPY --from=build /app/clidriver /app/clidriver
 
 ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 ENV IBM_DB_HOME=/app/clidriver
-ENV LD_LIBRARY_PATH=/app/clidriver/lib
+ENV LD_LIBRARY_PATH=/app/clidriver/lib:/app/clidriver/lib/icc
+ENV PATH=/app/clidriver/bin:$PATH
 
 EXPOSE 8080
 
